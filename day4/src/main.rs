@@ -8,20 +8,37 @@ fn main() -> io::Result<()> {
 
     part_one(&lines);
 
+    part_two(&lines);
+
     Ok(())
 }
 
 fn part_one(cards: &[String]) {
     let mut score: usize = 0;
 
-    for card in cards {
-        let matches = n_matches(card.as_str());
+    for i in 0..cards.len() {
+        let matches = n_matches(&cards[i]);
         if matches > 0 {
             score += 2_i32.pow(matches - 1) as usize;
         }
     }
 
     println!("{}", score)
+}
+
+fn part_two(cards: &[String]) {
+    let mut copies = vec![1; cards.len()];
+
+    for i in 0..cards.len() {
+        let matches = n_matches(&cards[i]);
+        for j in i + 1..std::cmp::min(i + 1 + matches as usize, cards.len()) {
+            copies[j] += copies[i];
+        }
+    }
+
+    let n_cards: usize = copies.iter().sum();
+
+    println!("{:?}", n_cards);
 }
 
 fn n_matches(card: &str) -> u32 {
