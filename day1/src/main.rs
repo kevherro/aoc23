@@ -5,21 +5,16 @@ use std::path::Path;
 
 fn main() -> io::Result<()> {
     let lines = get_lines("src/input.txt")?;
-
-    let part_one = calculate_part_one(&lines);
-    println!("{}", part_one);
-
-    let part_two = calculate_part_two(&lines);
-    println!("{}", part_two);
-
+    println!("{}", part_one(&lines));
+    println!("{}", part_two(&lines));
     Ok(())
 }
 
-fn calculate_part_one(lines: &[String]) -> i32 {
+fn part_one(lines: &[String]) -> i32 {
     lines.iter().map(|line| local_sum(line)).sum()
 }
 
-fn calculate_part_two(lines: &[String]) -> i32 {
+fn part_two(lines: &[String]) -> i32 {
     let map = create_map();
     let rev_map = create_rev_map();
 
